@@ -1,3 +1,6 @@
+let aboutMeData;
+let projectsData;
+
 // Load aboutMeData.json file content
 async function loadAboutMeData() {
   const res = await fetch("../data/aboutMeData.json");
@@ -13,31 +16,36 @@ async function loadProjectsData() {
 }
 
 // Populate about me section
-function populateAboutMe(aboutMe) {
+function populateAboutMe() {
   const aboutMeDev = document.querySelector("#aboutMe");
 
   const bioP = document.createElement("p");
-  bioP.textContent = aboutMe.aboutMe;
+  bioP.textContent = aboutMeData.aboutMe;
   aboutMeDev.appendChild(bioP);
 
   const headshotDev = document.createElement("div");
   headshotDev.classList.add("headshotContainer");
   const img = document.createElement("img");
-  img.src = aboutMe.headshot;
+  img.src = aboutMeData.headshot;
   img.alt = "headshot";
   headshotDev.appendChild(img);
 
   aboutMeDev.appendChild(headshotDev);
 }
 
-function populateProjectList(projectsData) {
+function populateProjectList() {
   const projectList = document.querySelector("#projectList");
 
   for (let i = 0; i < projectsData.length; i++) {
     const projectCardDev = document.createElement("div");
     projectCardDev.classList.add("projectCard");
     projectCardDev.id = projectsData[0].project_id;
-    projectCardDev.style.background = `url("${projectsData[i].card_image}")`;
+    if (projectsData[i].card_image) {
+      projectCardDev.style.background = `url("${projectsData[i].card_image}")`;
+    } else {
+      projectCardDev.style.background =
+        "20% url('../images/card_placeholder_bg.webp')";
+    }
 
     const h4 = document.createElement("h4");
     h4.textContent = projectsData[i].project_name;
@@ -53,11 +61,11 @@ function populateProjectList(projectsData) {
 
 // Populate data into the page
 async function populatePage() {
-  const aboutMe = await loadAboutMeData();
-  const projectsData = await loadProjectsData();
+  aboutMeData = await loadAboutMeData();
+  projectsData = await loadProjectsData();
 
-  populateAboutMe(aboutMe);
-  populateProjectList(projectsData);
+  populateAboutMe();
+  populateProjectList();
 
   console.log(aboutMe);
   console.log(projectsData);
