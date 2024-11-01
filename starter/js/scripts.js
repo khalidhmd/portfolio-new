@@ -45,6 +45,7 @@ function populateProjectList() {
     } else {
       projectCardDev.style.background =
         "20% url('../images/card_placeholder_bg.webp')";
+      projectCardDev.style.backgroundSize = "contain";
     }
 
     const h4 = document.createElement("h4");
