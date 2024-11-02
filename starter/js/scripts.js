@@ -1,7 +1,12 @@
 let aboutMeData;
 let projectsData;
-const projectList = document.querySelector("#projectList");
+const projectList = document.getElementById("projectList");
 let scrollPos = 0;
+const contactEmail = document.getElementById("contactEmail");
+const emailError = document.getElementById("emailError");
+const charactersLeft = document.getElementById("charactersLeft");
+const contactMessage = document.getElementById("contactMessage");
+const messageError = document.getElementById("messageError");
 
 // Load aboutMeData.json file content
 async function loadAboutMeData() {
@@ -108,12 +113,12 @@ function populateProjectList() {
 
 // arrow up click handler
 function arrowUp() {
-  // console.log("scroll up");
   if (scrollPos > 0) scrollPos--;
   document
     .getElementById(projectsData[scrollPos].project_id)
     .scrollIntoView({ block: "start", inline: "nearest" });
 }
+document.querySelector(".arrow-left").addEventListener("click", arrowUp);
 
 // arrow down click handler
 function arrowDown() {
@@ -121,19 +126,62 @@ function arrowDown() {
   document
     .getElementById(projectsData[scrollPos].project_id)
     .scrollIntoView({ block: "start", inline: "nearest" });
-  // console.log("scroll down");
 }
+document.querySelector(".arrow-right").addEventListener("click", arrowDown);
+
+// form submit handler
+function formSubmit(event) {
+  event.preventDefault();
+  emailError.textContent = "";
+  messageError.textContent = "";
+  let err = false;
+  // illegal characters  = /[^a-zA-Z0-9@._-]/
+  // valid email address = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (
+    !contactEmail.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ||
+    contactEmail.value.match(/[^a-zA-Z0-9@._-]/)
+  ) {
+    emailError.textContent += "Invalid email address. ";
+    err = true;
+  }
+  if ((contactEmail.textContent.length = 0)) {
+    emailError.textContent += "Email address can't be empty. ";
+    err = true;
+  }
+  if ((contactMessage.value.length = 0)) {
+    messageError.textContent += "Message can't be empty. ";
+    err = true;
+  }
+  if (contactMessage.value.match(/[^a-zA-Z0-9@._-]/)) {
+    messageError.textContent += "Message contains invalid characters. ";
+    err = true;
+  }
+  if (contactMessage.value.length > 300) {
+    messageError.textContent +=
+      "Message length should not exceed 300 characters. ";
+    err = true;
+  }
+
+  if (err) return;
+
+  // handle other form submit requirements
+}
+document.querySelector("#formSection").addEventListener("submit", formSubmit);
+
+// Message change event listener
+function messageChange(event) {
+  charactersLeft.textContent = `Characters: ${contactMessage.value.length}/300`;
+}
+contactMessage.addEventListener("keyup", messageChange);
 
 // initiate the page
 async function initPage() {
   aboutMeData = await loadAboutMeData(); // Load aboutMeData.json file content into aboutMeData object
   projectsData = await loadProjectsData(); // Load projectsData.json file content into projectsData object
-
   populateAboutMe();
   populateProjectList();
   populateSpotlight(projectsData[0].project_id);
-  document.querySelector(".arrow-left").addEventListener("click", arrowUp);
-  document.querySelector(".arrow-right").addEventListener("click", arrowDown);
 
   // for project debugging purposes
   console.log(aboutMeData);
