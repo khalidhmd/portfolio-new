@@ -1,5 +1,7 @@
 let aboutMeData;
 let projectsData;
+const projectList = document.querySelector("#projectList");
+let scrollPos = 0;
 
 // Load aboutMeData.json file content
 async function loadAboutMeData() {
@@ -76,8 +78,6 @@ function populateSpotlight(id) {
 
 // Populate project list
 function populateProjectList() {
-  const projectList = document.querySelector("#projectList");
-
   for (let i = 0; i < projectsData.length; i++) {
     const projectCardDev = document.createElement("div");
     projectCardDev.classList.add("projectCard");
@@ -106,6 +106,24 @@ function populateProjectList() {
   }
 }
 
+// arrow up click handler
+function arrowUp() {
+  // console.log("scroll up");
+  if (scrollPos > 0) scrollPos--;
+  document
+    .getElementById(projectsData[scrollPos].project_id)
+    .scrollIntoView({ block: "start", inline: "nearest" });
+}
+
+// arrow down click handler
+function arrowDown() {
+  if (scrollPos < projectsData.length - 1) scrollPos++;
+  document
+    .getElementById(projectsData[scrollPos].project_id)
+    .scrollIntoView({ block: "start", inline: "nearest" });
+  // console.log("scroll down");
+}
+
 // initiate the page
 async function initPage() {
   aboutMeData = await loadAboutMeData(); // Load aboutMeData.json file content into aboutMeData object
@@ -114,6 +132,8 @@ async function initPage() {
   populateAboutMe();
   populateProjectList();
   populateSpotlight(projectsData[0].project_id);
+  document.querySelector(".arrow-left").addEventListener("click", arrowUp);
+  document.querySelector(".arrow-right").addEventListener("click", arrowDown);
 
   // for project debugging purposes
   console.log(aboutMeData);
