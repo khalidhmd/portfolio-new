@@ -166,6 +166,7 @@ function formSubmit(event) {
   if (err) return;
 
   // handle other form submit requirements
+  alert("You submitted correctly and validation was successful");
 }
 document.querySelector("#formSection").addEventListener("submit", formSubmit);
 
