@@ -47,6 +47,9 @@ main {
   display: flex;
   flex-direction: column;
 }
+.error {
+  color: red;
+}
 
 nav {
   padding: 0 20px 0 0;
