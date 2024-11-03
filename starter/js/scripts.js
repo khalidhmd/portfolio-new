@@ -173,6 +173,11 @@ document.querySelector("#formSection").addEventListener("submit", formSubmit);
 // Message change event listener
 function messageChange(event) {
   charactersLeft.textContent = `Characters: ${contactMessage.value.length}/300`;
+  if (contactMessage.value.length > 300) {
+    charactersLeft.classList.add("error");
+  } else {
+    charactersLeft.classList.remove("error");
+  }
 }
 contactMessage.addEventListener("keyup", messageChange);
 
