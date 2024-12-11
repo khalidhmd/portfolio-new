@@ -117,10 +117,11 @@ function populateProjectList() {
     p.id = project.project_id;
     projectCardDev.appendChild(p);
 
-    projectCardDev.addEventListener("click", clickCard);
+    // projectCardDev.addEventListener("click", clickCard);
 
     projectList.appendChild(projectCardDev);
   });
+  projectList.addEventListener("click", clickCard);
 }
 
 // arrow up click handler
@@ -202,8 +203,8 @@ async function initPage() {
   populateSpotlight(projectsData[0].project_id);
 
   // for project debugging purposes
-  console.log(aboutMeData);
-  console.log(projectsData);
+  // console.log(aboutMeData);
+  // console.log(projectsData);
 }
 
 initPage();
