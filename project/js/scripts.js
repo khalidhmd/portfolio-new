@@ -94,12 +94,13 @@ function populateSpotlight(id) {
 
 // Populate project list
 function populateProjectList() {
-  for (let i = 0; i < projectsData.length; i++) {
+  // for (let i = 0; i < projectsData.length; i++) {
+  projectsData.forEach((project) => {
     const projectCardDev = document.createElement("div");
     projectCardDev.classList.add("projectCard");
-    projectCardDev.id = projectsData[i].project_id;
-    if (projectsData[i].card_image) {
-      projectCardDev.style.background = `url("${projectsData[i].card_image}")`;
+    projectCardDev.id = project.project_id;
+    if (project.card_image) {
+      projectCardDev.style.background = `url("${project.card_image}")`;
     } else {
       projectCardDev.style.background =
         "20% url('../images/card_placeholder_bg.webp')";
@@ -107,19 +108,19 @@ function populateProjectList() {
     }
 
     const h4 = document.createElement("h4");
-    h4.textContent = projectsData[i].project_name;
-    h4.id = projectsData[i].project_id;
+    h4.textContent = project.project_name;
+    h4.id = project.project_id;
     projectCardDev.appendChild(h4);
 
     const p = document.createElement("p");
-    p.textContent = projectsData[i].short_description;
-    p.id = projectsData[i].project_id;
+    p.textContent = project.short_description;
+    p.id = project.project_id;
     projectCardDev.appendChild(p);
 
     projectCardDev.addEventListener("click", clickCard);
 
     projectList.appendChild(projectCardDev);
-  }
+  });
 }
 
 // arrow up click handler
