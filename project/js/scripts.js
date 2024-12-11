@@ -65,16 +65,18 @@ function populateSpotlight(id) {
 
   const project = projectsData.find((p) => p.project_id === id);
 
-  if (project.spotlight_image) {
-    projectSpotlight.style.background = `url("${project.spotlight_image}")`;
-    projectSpotlight.style.backgroundSize = "contain";
-    // projectSpotlight.style.backgroundRepeat = "no-repeat";
-  } else {
-    projectSpotlight.style.background =
-      "url('../images/card_placeholder_bg.webp')";
-    projectSpotlight.style.backgroundSize = "contain";
-    // projectSpotlight.style.backgroundRepeat = "no-repeat";
-  }
+  // if (project.spotlight_image) {
+  projectSpotlight.style.background = `url("${
+    project.spotlight_image ?? "../images/card_placeholder_bg.webp"
+  }")`;
+  projectSpotlight.style.backgroundSize = "cover";
+  projectSpotlight.style.backgroundRepeat = "no-repeat";
+  // // } else {
+  // projectSpotlight.style.background =
+  //   "url('../images/card_placeholder_bg.webp')";
+  // projectSpotlight.style.backgroundSize = "cover";
+  // projectSpotlight.style.backgroundRepeat = "no-repeat";
+  // }
 
   const h3 = document.createElement("h3");
   h3.textContent = project.project_name;
