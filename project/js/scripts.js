@@ -61,7 +61,7 @@ function clickCard(event) {
 function populateSpotlight(id) {
   const spotlightTitles = document.getElementById("spotlightTitles");
   const projectSpotlight = document.getElementById("projectSpotlight");
-  spotlightTitles.innerHTML = "";
+  spotlightTitles.textContent = "";
 
   const project = projectsData.find((p) => p.project_id === id);
 
