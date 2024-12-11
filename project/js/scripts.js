@@ -10,16 +10,27 @@ const messageError = document.getElementById("messageError");
 
 // Load aboutMeData.json file content
 async function loadAboutMeData() {
-  const res = await fetch("../data/aboutMeData.json");
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch("../data/aboutMeData.json");
+    if (!res.ok) throw new Error("Error while loading about me data.");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    return {};
+  }
 }
 
 // Load projectsData.json file content
 async function loadProjectsData() {
-  const res = await fetch("../data/projectsData.json");
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch("../data/projectsData.json");
+    if (!res.ok) throw new Error("Error while loading projects data.");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    return [];
+  }
 }
 
 // Populate about me section
