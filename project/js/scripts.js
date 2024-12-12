@@ -65,29 +65,18 @@ function populateSpotlight(id) {
 
   const project = projectsData.find((p) => p.project_id === id);
 
-  // if (project.spotlight_image) {
   projectSpotlight.style.background = `url("${
     project.spotlight_image ?? "../images/card_placeholder_bg.webp"
   }")`;
   projectSpotlight.style.backgroundSize = "cover";
   projectSpotlight.style.backgroundRepeat = "no-repeat";
-  // // } else {
-  // projectSpotlight.style.background =
-  //   "url('../images/card_placeholder_bg.webp')";
-  // projectSpotlight.style.backgroundSize = "cover";
-  // projectSpotlight.style.backgroundRepeat = "no-repeat";
-  // }
 
   const h3 = document.createElement("h3");
   h3.textContent = project.project_name;
   const frgmt = document.createDocumentFragment();
   frgmt.append(h3);
   const p = document.createElement("p");
-  // if (project.long_description) {
   p.textContent = project.long_description ?? project.short_description;
-  // } else {
-  //   p.textContent = project.short_description;
-  // }
   frgmt.append(p);
   const link = document.createElement("a");
   link.textContent = "Click here to see more...";
@@ -98,20 +87,15 @@ function populateSpotlight(id) {
 
 // Populate project list
 function populateProjectList() {
-  // for (let i = 0; i < projectsData.length; i++) {
+  const frgmt = document.createDocumentFragment();
   projectsData.forEach((project) => {
     const projectCardDev = document.createElement("div");
     projectCardDev.classList.add("projectCard");
     projectCardDev.id = project.project_id;
-    // if (project.card_image) {
     projectCardDev.style.background = `url("${
       project.card_image ?? "../images/card_placeholder_bg.webp"
     }")`;
-    // } else {
-    //   projectCardDev.style.background =
-    // "20% url('../images/card_placeholder_bg.webp')";
     projectCardDev.style.backgroundSize = "contain";
-    // }
 
     const h4 = document.createElement("h4");
     h4.textContent = project.project_name;
@@ -123,28 +107,29 @@ function populateProjectList() {
     p.id = project.project_id;
     projectCardDev.append(p);
 
-    // projectCardDev.addEventListener("click", clickCard);
-
-    projectList.append(projectCardDev);
+    frgmt.append(projectCardDev);
   });
+  projectList.append(frgmt);
   projectList.addEventListener("click", clickCard);
 }
 
 // arrow up click handler
 function arrowUp() {
-  if (scrollPos > 0) scrollPos--;
-  document
-    .getElementById(projectsData[scrollPos].project_id)
-    .scrollIntoView({ block: "start", inline: "nearest" });
+  if (screen.width >= 768) {
+    projectList.scrollTop += 220;
+  } else {
+    projectList.scrollLeft -= 220;
+  }
 }
 document.querySelector(".arrow-left").addEventListener("click", arrowUp);
 
 // arrow down click handler
 function arrowDown() {
-  if (scrollPos < projectsData.length - 1) scrollPos++;
-  document
-    .getElementById(projectsData[scrollPos].project_id)
-    .scrollIntoView({ block: "start", inline: "nearest" });
+  if (screen.width >= 768) {
+    projectList.scrollTop -= 220;
+  } else {
+    projectList.scrollLeft += 220;
+  }
 }
 document.querySelector(".arrow-right").addEventListener("click", arrowDown);
 
