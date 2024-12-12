@@ -39,16 +39,16 @@ function populateAboutMe() {
 
   const bioP = document.createElement("p");
   bioP.textContent = aboutMeData.aboutMe;
-  aboutMeDev.appendChild(bioP);
+  aboutMeDev.append(bioP);
 
   const headshotDev = document.createElement("div");
   headshotDev.classList.add("headshotContainer");
   const img = document.createElement("img");
   img.src = aboutMeData.headshot;
   img.alt = "headshot";
-  headshotDev.appendChild(img);
+  headshotDev.append(img);
 
-  aboutMeDev.appendChild(headshotDev);
+  aboutMeDev.append(headshotDev);
 }
 
 // Card click handler
@@ -80,18 +80,20 @@ function populateSpotlight(id) {
 
   const h3 = document.createElement("h3");
   h3.textContent = project.project_name;
-  spotlightTitles.appendChild(h3);
+  const frgmt = document.createDocumentFragment();
+  frgmt.append(h3);
   const p = document.createElement("p");
-  if (project.long_description) {
-    p.textContent = project.long_description;
-  } else {
-    p.textContent = project.short_description;
-  }
-  spotlightTitles.appendChild(p);
+  // if (project.long_description) {
+  p.textContent = project.long_description ?? project.short_description;
+  // } else {
+  //   p.textContent = project.short_description;
+  // }
+  frgmt.append(p);
   const link = document.createElement("a");
   link.textContent = "Click here to see more...";
-  link.href = project.url;
-  spotlightTitles.appendChild(link);
+  link.href = project.url ?? "https://example.com/project15";
+  frgmt.append(link);
+  spotlightTitles.append(frgmt);
 }
 
 // Populate project list
@@ -101,27 +103,29 @@ function populateProjectList() {
     const projectCardDev = document.createElement("div");
     projectCardDev.classList.add("projectCard");
     projectCardDev.id = project.project_id;
-    if (project.card_image) {
-      projectCardDev.style.background = `url("${project.card_image}")`;
-    } else {
-      projectCardDev.style.background =
-        "20% url('../images/card_placeholder_bg.webp')";
-      projectCardDev.style.backgroundSize = "contain";
-    }
+    // if (project.card_image) {
+    projectCardDev.style.background = `url("${
+      project.card_image ?? "../images/card_placeholder_bg.webp"
+    }")`;
+    // } else {
+    //   projectCardDev.style.background =
+    // "20% url('../images/card_placeholder_bg.webp')";
+    projectCardDev.style.backgroundSize = "contain";
+    // }
 
     const h4 = document.createElement("h4");
     h4.textContent = project.project_name;
     h4.id = project.project_id;
-    projectCardDev.appendChild(h4);
+    projectCardDev.append(h4);
 
     const p = document.createElement("p");
     p.textContent = project.short_description;
     p.id = project.project_id;
-    projectCardDev.appendChild(p);
+    projectCardDev.append(p);
 
     // projectCardDev.addEventListener("click", clickCard);
 
-    projectList.appendChild(projectCardDev);
+    projectList.append(projectCardDev);
   });
   projectList.addEventListener("click", clickCard);
 }
@@ -194,7 +198,7 @@ function messageChange(event) {
     charactersLeft.classList.remove("error");
   }
 }
-contactMessage.addEventListener("keyup", messageChange);
+contactMessage.addEventListener("input", messageChange);
 
 // initiate the page
 async function initPage() {
